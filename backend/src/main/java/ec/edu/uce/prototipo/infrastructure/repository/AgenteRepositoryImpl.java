@@ -7,7 +7,7 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
-// Capa de infraestructura. Solo habla con la base de datos.
+// Habla con la bdd
 @ApplicationScoped
 @Transactional
 public class AgenteRepositoryImpl implements PanacheRepositoryBase<Agente, Integer> {

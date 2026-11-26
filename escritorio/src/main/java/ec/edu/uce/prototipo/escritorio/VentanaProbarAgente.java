@@ -76,23 +76,19 @@ public class VentanaProbarAgente {
     private void prepararTabla() {
 
         TableColumn<Ejecucion, String> columnaFecha = new TableColumn<>("Fecha");
-        columnaFecha.setCellValueFactory(
-                fila -> new SimpleStringProperty(this.fechaCorta(fila.getValue().getFecha())));
+        columnaFecha.setCellValueFactory(fila -> new SimpleStringProperty(this.fechaCorta(fila.getValue().getFecha())));
         columnaFecha.setPrefWidth(130);
 
         TableColumn<Ejecucion, String> columnaTokens = new TableColumn<>("Tokens");
-        columnaTokens.setCellValueFactory(
-                fila -> new SimpleStringProperty(this.texto(fila.getValue().getTokens())));
+        columnaTokens.setCellValueFactory(fila -> new SimpleStringProperty(this.texto(fila.getValue().getTokens())));
         columnaTokens.setPrefWidth(70);
 
         TableColumn<Ejecucion, String> columnaEntrada = new TableColumn<>("Entrada");
-        columnaEntrada.setCellValueFactory(
-                fila -> new SimpleStringProperty(fila.getValue().getEntrada()));
+        columnaEntrada.setCellValueFactory(fila -> new SimpleStringProperty(fila.getValue().getEntrada()));
         columnaEntrada.setPrefWidth(300);
 
         TableColumn<Ejecucion, String> columnaSalida = new TableColumn<>("Respuesta");
-        columnaSalida.setCellValueFactory(
-                fila -> new SimpleStringProperty(fila.getValue().getSalida()));
+        columnaSalida.setCellValueFactory(fila -> new SimpleStringProperty(fila.getValue().getSalida()));
         columnaSalida.setPrefWidth(340);
 
         this.tabla.getColumns().add(columnaFecha);
@@ -133,17 +129,15 @@ public class VentanaProbarAgente {
 
         try {
 
-            Ejecucion ejecucion = this.servicio.probarAgente(
-                    this.agente.getId(), this.campoEntrada.getText().trim());
+            Ejecucion ejecucion = this.servicio.probarAgente(this.agente.getId(), this.campoEntrada.getText().trim());
 
             if (ejecucion == null) {
-                this.avisar("El agente no esta disponible. Revise que este activo.");
+                this.avisar("El agente no esta disponible -> revisar que esté activo");
                 return;
             }
 
             this.campoSalida.setText(ejecucion.getSalida());
             this.etiquetaTokens.setText("Tokens usados: " + ejecucion.getTokens());
-
             this.cargarPruebas();
 
         } catch (RuntimeException error) {

@@ -11,7 +11,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-// Conexionn con backend
+// conexionn con backend
 public class ServicioRest {
 
     private static final String DIRECCION = "http://localhost:8080";
@@ -33,6 +33,7 @@ public class ServicioRest {
 
         return this.aUsuario(respuesta);
     }
+    ///////////////////////////////////////////////////////////////////////////////////////
 
     public List<Agente> buscarAgentes() {
 
@@ -41,6 +42,8 @@ public class ServicioRest {
         return this.aListaDeAgentes(respuesta);
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////
+
     public boolean guardarAgente(Agente agente) {
 
         String respuesta = this.llamar("POST", "/agentes/guardar", this.aTexto(agente));
@@ -48,17 +51,25 @@ public class ServicioRest {
         return Boolean.parseBoolean(respuesta.trim());
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////
+
     public void actualizarAgente(Agente agente, Integer id) {
         this.llamar("PUT", "/agentes/actualizar/" + id, this.aTexto(agente));
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////
 
     public void desactivarAgente(Integer id) {
         this.llamar("PUT", "/agentes/desactivar/" + id, "");
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////
+
     public void activarAgente(Integer id) {
         this.llamar("PUT", "/agentes/activar/" + id, "");
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////
 
 
     public Ejecucion probarAgente(Integer agenteId, String entrada) {
@@ -76,12 +87,16 @@ public class ServicioRest {
         return this.aEjecucion(respuesta);
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////
+
     public List<Ejecucion> buscarPruebas(Integer agenteId) {
 
         String respuesta = this.llamar("GET", "/ejecuciones/poragente/" + agenteId, "");
 
         return this.aListaDeEjecuciones(respuesta);
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////
 
     private String llamar(String metodo, String ruta, String cuerpo) {
 
@@ -101,18 +116,18 @@ public class ServicioRest {
                     .method(metodo, contenido)
                     .build();
 
-            HttpResponse<String> respuesta = this.cliente.send(
-                    peticion, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+            HttpResponse<String> respuesta = this.cliente.send(peticion, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
 
             return respuesta.body();
 
         } catch (Exception error) {
 
             //error del backend apagado
-            throw new RuntimeException(
-                    "No se pudo conectar con el servidor. Revise que el backend este encendido.");
+            throw new RuntimeException("No se pudo conectar con el servidor. Revise que el backend este encendido.");
         }
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////
 
     private String aTexto(Object dato) {
         try {
@@ -122,6 +137,8 @@ public class ServicioRest {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////
+
     private Usuario aUsuario(String texto) {
         try {
             return this.traductor.readValue(texto, Usuario.class);
@@ -130,6 +147,8 @@ public class ServicioRest {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////
+
     private Ejecucion aEjecucion(String texto) {
         try {
             return this.traductor.readValue(texto, Ejecucion.class);
@@ -137,6 +156,8 @@ public class ServicioRest {
             throw new RuntimeException("No se entendio la respuesta del servidor");
         }
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////
 
     private List<Agente> aListaDeAgentes(String texto) {
         try {
@@ -150,6 +171,8 @@ public class ServicioRest {
             throw new RuntimeException("No se entendio la respuesta del servidor");
         }
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////
 
     private List<Ejecucion> aListaDeEjecuciones(String texto) {
         try {

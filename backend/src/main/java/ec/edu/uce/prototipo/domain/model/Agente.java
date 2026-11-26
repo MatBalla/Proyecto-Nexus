@@ -104,9 +104,6 @@ public class Agente extends PanacheEntityBase {
 
     @Override
     public String toString() {
-        return "Agente [id=" + this.id
-                + ", nombre=" + this.nombre
-                + ", maximoTokens=" + this.maximoTokens
-                + ", activo=" + this.activo + "]";
+        return "Agente [id=" + this.id + ", nombre=" + this.nombre + ", maximoTokens=" + this.maximoTokens + ", activo=" + this.activo + "]";
     }
 }

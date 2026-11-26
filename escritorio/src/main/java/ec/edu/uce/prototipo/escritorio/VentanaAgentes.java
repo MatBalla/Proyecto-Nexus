@@ -31,7 +31,6 @@ public class VentanaAgentes {
     private final Stage ventana;
     private final Usuario usuario;
 
-    // La lista que ve la tabla. Al cambiarla, la tabla se redibuja sola.
     private final ObservableList<Agente> listaAgentes = FXCollections.observableArrayList();
 
     private final TableView<Agente> tabla = new TableView<>();
@@ -69,36 +68,32 @@ public class VentanaAgentes {
         return raiz;
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////
+
     private void prepararTabla() {
 
         TableColumn<Agente, String> columnaId = new TableColumn<>("Id");
-        columnaId.setCellValueFactory(
-                fila -> new SimpleStringProperty(this.texto(fila.getValue().getId())));
+        columnaId.setCellValueFactory(fila -> new SimpleStringProperty(this.texto(fila.getValue().getId())));
         columnaId.setPrefWidth(40);
 
         TableColumn<Agente, String> columnaNombre = new TableColumn<>("Nombre");
-        columnaNombre.setCellValueFactory(
-                fila -> new SimpleStringProperty(fila.getValue().getNombre()));
+        columnaNombre.setCellValueFactory(fila -> new SimpleStringProperty(fila.getValue().getNombre()));
         columnaNombre.setPrefWidth(140);
 
         TableColumn<Agente, String> columnaInstrucciones = new TableColumn<>("Instrucciones");
-        columnaInstrucciones.setCellValueFactory(
-                fila -> new SimpleStringProperty(fila.getValue().getInstrucciones()));
+        columnaInstrucciones.setCellValueFactory( fila -> new SimpleStringProperty(fila.getValue().getInstrucciones()));
         columnaInstrucciones.setPrefWidth(380);
 
         TableColumn<Agente, String> columnaTokens = new TableColumn<>("Max tokens");
-        columnaTokens.setCellValueFactory(
-                fila -> new SimpleStringProperty(this.texto(fila.getValue().getMaximoTokens())));
+        columnaTokens.setCellValueFactory(fila -> new SimpleStringProperty(this.texto(fila.getValue().getMaximoTokens())));
         columnaTokens.setPrefWidth(90);
 
         TableColumn<Agente, String> columnaDocumentos = new TableColumn<>("Usa documentos");
-        columnaDocumentos.setCellValueFactory(
-                fila -> new SimpleStringProperty(this.texto(fila.getValue().getUsaDocumentos())));
+        columnaDocumentos.setCellValueFactory(fila -> new SimpleStringProperty(this.texto(fila.getValue().getUsaDocumentos())));
         columnaDocumentos.setPrefWidth(110);
 
         TableColumn<Agente, String> columnaActivo = new TableColumn<>("Activo");
-        columnaActivo.setCellValueFactory(
-                fila -> new SimpleStringProperty(this.texto(fila.getValue().getActivo())));
+        columnaActivo.setCellValueFactory(fila -> new SimpleStringProperty(this.texto(fila.getValue().getActivo())));
         columnaActivo.setPrefWidth(70);
 
         this.tabla.getColumns().add(columnaId);
@@ -111,16 +106,14 @@ public class VentanaAgentes {
         this.tabla.setItems(this.listaAgentes);
         this.tabla.setPrefHeight(220);
 
-        // Al hacer clic en una fila, sus datos pasan al formulario.
-        this.tabla.getSelectionModel().selectedItemProperty().addListener(
-                (observado, anterior, seleccionado) -> this.mostrarEnFormulario(seleccionado));
+        this.tabla.getSelectionModel().selectedItemProperty().addListener((observado, anterior, seleccionado) -> this.mostrarEnFormulario(seleccionado));
     }
+
 
     private GridPane construirFormulario() {
 
         this.campoInstrucciones.setPrefRowCount(3);
         this.campoInstrucciones.setWrapText(true);
-        this.campoMaximoTokens.setPromptText("Si se deja vacio se usa " + TOKENS_POR_DEFECTO);
 
         GridPane formulario = new GridPane();
         formulario.setHgap(10);
@@ -158,7 +151,6 @@ public class VentanaAgentes {
         fila.getChildren().add(botonVerTodos);
         fila.getChildren().add(botonProbar);
 
-        // Los botones que cambian datos solo aparecen para el administrador.
         if (this.usuario.esAdmin()) {
 
             Button botonNuevo = new Button("Nuevo");
@@ -193,10 +185,7 @@ public class VentanaAgentes {
 
     private void cargarAgentes() {
         try {
-
             List<Agente> agentes = this.servicio.buscarAgentes();
-
-            // setAll reemplaza todo el contenido de la lista de una sola vez.
             this.listaAgentes.setAll(agentes);
 
         } catch (RuntimeException error) {
@@ -204,6 +193,7 @@ public class VentanaAgentes {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////
     private void guardar() {
 
         Agente agente = this.leerFormulario();
@@ -230,6 +220,8 @@ public class VentanaAgentes {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////
+
     private void actualizar() {
 
         if (this.idSeleccionado == null) {
@@ -253,6 +245,9 @@ public class VentanaAgentes {
         }
     }
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+
     private void desactivar() {
 
         if (this.idSeleccionado == null) {
@@ -270,6 +265,7 @@ public class VentanaAgentes {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////
     private void activar() {
 
         if (this.idSeleccionado == null) {
@@ -287,7 +283,7 @@ public class VentanaAgentes {
         }
     }
 
-    //pantalla de prueba con el agente
+    ///////////////////////////////////////////////////////////////////////////////////////
     private void probar() {
 
         Agente seleccionado = this.tabla.getSelectionModel().getSelectedItem();
@@ -297,18 +293,20 @@ public class VentanaAgentes {
             return;
         }
 
-        Pane contenido = new VentanaProbarAgente(
-                this.ventana, this.usuario, seleccionado).construir();
+        Pane contenido = new VentanaProbarAgente(this.ventana, this.usuario, seleccionado).construir();
 
         this.ventana.setScene(new Scene(contenido, 900, 650));
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////
     private void volverAlMenu() {
 
         Pane contenido = new VentanaMenu(this.ventana, this.usuario).construir();
 
         this.ventana.setScene(new Scene(contenido, 400, 300));
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////
 
     private Agente leerFormulario() {
 

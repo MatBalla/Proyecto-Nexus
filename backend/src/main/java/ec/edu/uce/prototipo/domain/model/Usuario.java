@@ -35,7 +35,6 @@ public class Usuario extends PanacheEntityBase {
     @Column(name = "usu_clave")
     private String clave;
 
-    // Guarda el texto ADMIN o USUARIO.
     @Column(name = "usu_rol")
     private String rol;
 
@@ -90,16 +89,12 @@ public class Usuario extends PanacheEntityBase {
         this.rol = rol;
     }
 
-    // Dice si este usuario es administrador.
     public boolean esAdmin() {
         return "ADMIN".equals(this.rol);
     }
 
     @Override
     public String toString() {
-        return "Usuario [id=" + this.id
-                + ", nombre=" + this.nombre
-                + ", correo=" + this.correo
-                + ", rol=" + this.rol + "]";
+        return "Usuario [id=" + this.id + ", nombre=" + this.nombre + ", correo=" + this.correo + ", rol=" + this.rol + "]";
     }
 }

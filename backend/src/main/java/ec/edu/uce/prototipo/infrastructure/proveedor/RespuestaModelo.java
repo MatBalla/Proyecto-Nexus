@@ -1,6 +1,6 @@
 package ec.edu.uce.prototipo.infrastructure.proveedor;
 
-// Lo que devuelve un proveedor, el texto de la respuesta y cuantos tokens costo.
+// devuelta del agente
 public class RespuestaModelo {
 
     private final String texto;

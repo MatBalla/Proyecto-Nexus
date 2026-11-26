@@ -31,7 +31,6 @@ public class Ejecucion extends PanacheEntityBase {
     @Column(name = "eje_agente_id")
     private Integer agenteId;
 
-    // Se copia el nombre para que el historial no cambie si despues renombran el agente.
     @Column(name = "eje_agente_nombre")
     private String agenteNombre;
 
@@ -119,9 +118,6 @@ public class Ejecucion extends PanacheEntityBase {
 
     @Override
     public String toString() {
-        return "Ejecucion [id=" + this.id
-                + ", agenteNombre=" + this.agenteNombre
-                + ", tokens=" + this.tokens
-                + ", fecha=" + this.fecha + "]";
+        return "Ejecucion [id=" + this.id + ", agenteNombre=" + this.agenteNombre + ", tokens=" + this.tokens + ", fecha=" + this.fecha + "]";
     }
 }

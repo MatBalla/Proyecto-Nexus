@@ -25,8 +25,7 @@ public class VentanaMenu {
         VBox raiz = new VBox(8);
         raiz.setPadding(new Insets(20));
 
-        raiz.getChildren().add(new Label("Sesion: " + this.usuario.getNombre()
-                + " (" + this.usuario.getRol() + ")"));
+        raiz.getChildren().add(new Label("Sesion: " + this.usuario.getNombre() + " (" + this.usuario.getRol() + ")"));
 
         Button botonAgentes = new Button("Agentes");
         botonAgentes.setOnAction(evento -> this.abrirAgentes());
@@ -48,7 +47,7 @@ public class VentanaMenu {
 
         Button boton = new Button(nombre);
 
-        boton.setOnAction(evento -> this.avisar( "El modulo de " + nombre.toLowerCase() + " se implementa luego."));
+        boton.setOnAction(evento -> this.avisar( "El modulo de " + nombre.toLowerCase() + " se implementará en los siguientes incrementos"));
 
         return boton;
     }

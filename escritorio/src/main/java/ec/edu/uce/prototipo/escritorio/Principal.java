@@ -13,7 +13,7 @@ public class Principal extends Application {
 
         Pane contenido = new VentanaLogin(ventana).construir();
 
-        Scene escena = new Scene(contenido, 400, 220);
+        Scene escena = new Scene(contenido, 300, 200);
 
         ventana.setScene(escena);
         ventana.show();
